@@ -547,6 +547,48 @@ export type Database = {
         }
         Relationships: []
       }
+      programa_active_purchases: {
+        Row: {
+          amount: number | null
+          created_at: string
+          email: string
+          id: string
+          payment_status: string
+          payt_order_id: string
+          product_name: string | null
+          purchase_date: string | null
+          raw_payload: Json | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          email: string
+          id?: string
+          payment_status: string
+          payt_order_id: string
+          product_name?: string | null
+          purchase_date?: string | null
+          raw_payload?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          email?: string
+          id?: string
+          payment_status?: string
+          payt_order_id?: string
+          product_name?: string | null
+          purchase_date?: string | null
+          raw_payload?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       purchases: {
         Row: {
           amount: number | null
