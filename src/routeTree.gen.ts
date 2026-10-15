@@ -16,20 +16,24 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedBoasVindasRouteImport } from './routes/_authenticated/boas-vindas'
+import { Route as AuthenticatedBonusRouteImport } from './routes/_authenticated/bonus'
 import { Route as AuthenticatedDiagnosticoRouteImport } from './routes/_authenticated/diagnostico'
 import { Route as AuthenticatedFase2RouteImport } from './routes/_authenticated/fase-2'
 import { Route as AuthenticatedFlacidezRouteImport } from './routes/_authenticated/flacidez'
 import { Route as AuthenticatedHojeRouteImport } from './routes/_authenticated/hoje'
 import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
+import { Route as AuthenticatedMateriaisRouteImport } from './routes/_authenticated/materiais'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedPontosRouteImport } from './routes/_authenticated/pontos'
 import { Route as AuthenticatedProgramaRouteImport } from './routes/_authenticated/programa'
 import { Route as AuthenticatedProgramaIntakeRouteImport } from './routes/_authenticated/programa-intake'
+import { Route as AuthenticatedProgressoRouteImport } from './routes/_authenticated/progresso'
 import { Route as AuthenticatedProtocoloRouteImport } from './routes/_authenticated/protocolo'
 import { Route as AuthenticatedSeuProtocoloRouteImport } from './routes/_authenticated/seu-protocolo'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAulasIndexRouteImport } from './routes/_authenticated/aulas.index'
 import { Route as AuthenticatedAulasLessonIdRouteImport } from './routes/_authenticated/aulas.$lessonId'
+import { Route as AuthenticatedProgramaFaseIdRouteImport } from './routes/_authenticated/programa.$faseId'
 import { Route as AuthenticatedProtocoloIndexRouteImport } from './routes/_authenticated/protocolo.index'
 import { Route as AuthenticatedProtocoloFase1RouteImport } from './routes/_authenticated/protocolo.fase-1'
 import { Route as AuthenticatedProtocoloFase2RouteImport } from './routes/_authenticated/protocolo.fase-2'
@@ -78,6 +82,11 @@ const AuthenticatedBoasVindasRoute = AuthenticatedBoasVindasRouteImport.update({
   path: '/boas-vindas',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedBonusRoute = AuthenticatedBonusRouteImport.update({
+  id: '/bonus',
+  path: '/bonus',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDiagnosticoRoute =
   AuthenticatedDiagnosticoRouteImport.update({
     id: '/diagnostico',
@@ -104,6 +113,11 @@ const AuthenticatedIntakeRoute = AuthenticatedIntakeRouteImport.update({
   path: '/intake',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedMateriaisRoute = AuthenticatedMateriaisRouteImport.update({
+  id: '/materiais',
+  path: '/materiais',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -125,6 +139,11 @@ const AuthenticatedProgramaIntakeRoute =
     path: '/programa-intake',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedProgressoRoute = AuthenticatedProgressoRouteImport.update({
+  id: '/progresso',
+  path: '/progresso',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedProtocoloRoute = AuthenticatedProtocoloRouteImport.update({
   id: '/protocolo',
   path: '/protocolo',
@@ -151,6 +170,12 @@ const AuthenticatedAulasLessonIdRoute =
     id: '/aulas/$lessonId',
     path: '/aulas/$lessonId',
     getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedProgramaFaseIdRoute =
+  AuthenticatedProgramaFaseIdRouteImport.update({
+    id: '/$faseId',
+    path: '/$faseId',
+    getParentRoute: () => AuthenticatedProgramaRoute,
   } as any)
 const AuthenticatedProtocoloIndexRoute =
   AuthenticatedProtocoloIndexRouteImport.update({
@@ -233,19 +258,23 @@ export interface FileRoutesByFullPath {
   '/termos': typeof TermosRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/boas-vindas': typeof AuthenticatedBoasVindasRoute
+  '/bonus': typeof AuthenticatedBonusRoute
   '/diagnostico': typeof AuthenticatedDiagnosticoRoute
   '/fase-2': typeof AuthenticatedFase2Route
   '/flacidez': typeof AuthenticatedFlacidezRoute
   '/hoje': typeof AuthenticatedHojeRoute
   '/intake': typeof AuthenticatedIntakeRoute
+  '/materiais': typeof AuthenticatedMateriaisRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
-  '/programa': typeof AuthenticatedProgramaRoute
+  '/programa': typeof AuthenticatedProgramaRouteWithChildren
   '/programa-intake': typeof AuthenticatedProgramaIntakeRoute
+  '/progresso': typeof AuthenticatedProgressoRoute
   '/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
+  '/programa/$faseId': typeof AuthenticatedProgramaFaseIdRoute
   '/protocolo/fase-1': typeof AuthenticatedProtocoloFase1Route
   '/protocolo/fase-2': typeof AuthenticatedProtocoloFase2Route
   '/sugestoes-chefe/$tipo': typeof AuthenticatedSugestoesChefeTipoRoute
@@ -268,18 +297,22 @@ export interface FileRoutesByTo {
   '/termos': typeof TermosRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/boas-vindas': typeof AuthenticatedBoasVindasRoute
+  '/bonus': typeof AuthenticatedBonusRoute
   '/diagnostico': typeof AuthenticatedDiagnosticoRoute
   '/fase-2': typeof AuthenticatedFase2Route
   '/flacidez': typeof AuthenticatedFlacidezRoute
   '/hoje': typeof AuthenticatedHojeRoute
   '/intake': typeof AuthenticatedIntakeRoute
+  '/materiais': typeof AuthenticatedMateriaisRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
-  '/programa': typeof AuthenticatedProgramaRoute
+  '/programa': typeof AuthenticatedProgramaRouteWithChildren
   '/programa-intake': typeof AuthenticatedProgramaIntakeRoute
+  '/progresso': typeof AuthenticatedProgressoRoute
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
+  '/programa/$faseId': typeof AuthenticatedProgramaFaseIdRoute
   '/protocolo/fase-1': typeof AuthenticatedProtocoloFase1Route
   '/protocolo/fase-2': typeof AuthenticatedProtocoloFase2Route
   '/sugestoes-chefe/$tipo': typeof AuthenticatedSugestoesChefeTipoRoute
@@ -304,19 +337,23 @@ export interface FileRoutesById {
   '/termos': typeof TermosRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/boas-vindas': typeof AuthenticatedBoasVindasRoute
+  '/_authenticated/bonus': typeof AuthenticatedBonusRoute
   '/_authenticated/diagnostico': typeof AuthenticatedDiagnosticoRoute
   '/_authenticated/fase-2': typeof AuthenticatedFase2Route
   '/_authenticated/flacidez': typeof AuthenticatedFlacidezRoute
   '/_authenticated/hoje': typeof AuthenticatedHojeRoute
   '/_authenticated/intake': typeof AuthenticatedIntakeRoute
+  '/_authenticated/materiais': typeof AuthenticatedMateriaisRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/pontos': typeof AuthenticatedPontosRoute
-  '/_authenticated/programa': typeof AuthenticatedProgramaRoute
+  '/_authenticated/programa': typeof AuthenticatedProgramaRouteWithChildren
   '/_authenticated/programa-intake': typeof AuthenticatedProgramaIntakeRoute
+  '/_authenticated/progresso': typeof AuthenticatedProgressoRoute
   '/_authenticated/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
   '/_authenticated/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
+  '/_authenticated/programa/$faseId': typeof AuthenticatedProgramaFaseIdRoute
   '/_authenticated/protocolo/fase-1': typeof AuthenticatedProtocoloFase1Route
   '/_authenticated/protocolo/fase-2': typeof AuthenticatedProtocoloFase2Route
   '/_authenticated/sugestoes-chefe/$tipo': typeof AuthenticatedSugestoesChefeTipoRoute
@@ -341,19 +378,23 @@ export interface FileRouteTypes {
     | '/termos'
     | '/admin'
     | '/boas-vindas'
+    | '/bonus'
     | '/diagnostico'
     | '/fase-2'
     | '/flacidez'
     | '/hoje'
     | '/intake'
+    | '/materiais'
     | '/perfil'
     | '/pontos'
     | '/programa'
     | '/programa-intake'
+    | '/progresso'
     | '/protocolo'
     | '/seu-protocolo'
     | '/api/chat'
     | '/aulas/$lessonId'
+    | '/programa/$faseId'
     | '/protocolo/fase-1'
     | '/protocolo/fase-2'
     | '/sugestoes-chefe/$tipo'
@@ -376,18 +417,22 @@ export interface FileRouteTypes {
     | '/termos'
     | '/admin'
     | '/boas-vindas'
+    | '/bonus'
     | '/diagnostico'
     | '/fase-2'
     | '/flacidez'
     | '/hoje'
     | '/intake'
+    | '/materiais'
     | '/perfil'
     | '/pontos'
     | '/programa'
     | '/programa-intake'
+    | '/progresso'
     | '/seu-protocolo'
     | '/api/chat'
     | '/aulas/$lessonId'
+    | '/programa/$faseId'
     | '/protocolo/fase-1'
     | '/protocolo/fase-2'
     | '/sugestoes-chefe/$tipo'
@@ -411,19 +456,23 @@ export interface FileRouteTypes {
     | '/termos'
     | '/_authenticated/admin'
     | '/_authenticated/boas-vindas'
+    | '/_authenticated/bonus'
     | '/_authenticated/diagnostico'
     | '/_authenticated/fase-2'
     | '/_authenticated/flacidez'
     | '/_authenticated/hoje'
     | '/_authenticated/intake'
+    | '/_authenticated/materiais'
     | '/_authenticated/perfil'
     | '/_authenticated/pontos'
     | '/_authenticated/programa'
     | '/_authenticated/programa-intake'
+    | '/_authenticated/progresso'
     | '/_authenticated/protocolo'
     | '/_authenticated/seu-protocolo'
     | '/api/chat'
     | '/_authenticated/aulas/$lessonId'
+    | '/_authenticated/programa/$faseId'
     | '/_authenticated/protocolo/fase-1'
     | '/_authenticated/protocolo/fase-2'
     | '/_authenticated/sugestoes-chefe/$tipo'
@@ -507,6 +556,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBoasVindasRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/bonus': {
+      id: '/_authenticated/bonus'
+      path: '/bonus'
+      fullPath: '/bonus'
+      preLoaderRoute: typeof AuthenticatedBonusRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/diagnostico': {
       id: '/_authenticated/diagnostico'
       path: '/diagnostico'
@@ -542,6 +598,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIntakeRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/materiais': {
+      id: '/_authenticated/materiais'
+      path: '/materiais'
+      fullPath: '/materiais'
+      preLoaderRoute: typeof AuthenticatedMateriaisRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/perfil': {
       id: '/_authenticated/perfil'
       path: '/perfil'
@@ -568,6 +631,13 @@ declare module '@tanstack/react-router' {
       path: '/programa-intake'
       fullPath: '/programa-intake'
       preLoaderRoute: typeof AuthenticatedProgramaIntakeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/progresso': {
+      id: '/_authenticated/progresso'
+      path: '/progresso'
+      fullPath: '/progresso'
+      preLoaderRoute: typeof AuthenticatedProgressoRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/protocolo': {
@@ -604,6 +674,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/aulas/$lessonId'
       preLoaderRoute: typeof AuthenticatedAulasLessonIdRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/programa/$faseId': {
+      id: '/_authenticated/programa/$faseId'
+      path: '/$faseId'
+      fullPath: '/programa/$faseId'
+      preLoaderRoute: typeof AuthenticatedProgramaFaseIdRouteImport
+      parentRoute: typeof AuthenticatedProgramaRoute
     }
     '/_authenticated/protocolo/': {
       id: '/_authenticated/protocolo/'
@@ -699,6 +776,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedProgramaRouteChildren {
+  AuthenticatedProgramaFaseIdRoute: typeof AuthenticatedProgramaFaseIdRoute
+}
+
+const AuthenticatedProgramaRouteChildren: AuthenticatedProgramaRouteChildren = {
+  AuthenticatedProgramaFaseIdRoute: AuthenticatedProgramaFaseIdRoute,
+}
+
+const AuthenticatedProgramaRouteWithChildren =
+  AuthenticatedProgramaRoute._addFileChildren(
+    AuthenticatedProgramaRouteChildren,
+  )
+
 interface AuthenticatedProtocoloRouteChildren {
   AuthenticatedProtocoloFase1Route: typeof AuthenticatedProtocoloFase1Route
   AuthenticatedProtocoloFase2Route: typeof AuthenticatedProtocoloFase2Route
@@ -720,15 +810,18 @@ const AuthenticatedProtocoloRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedBoasVindasRoute: typeof AuthenticatedBoasVindasRoute
+  AuthenticatedBonusRoute: typeof AuthenticatedBonusRoute
   AuthenticatedDiagnosticoRoute: typeof AuthenticatedDiagnosticoRoute
   AuthenticatedFase2Route: typeof AuthenticatedFase2Route
   AuthenticatedFlacidezRoute: typeof AuthenticatedFlacidezRoute
   AuthenticatedHojeRoute: typeof AuthenticatedHojeRoute
   AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
+  AuthenticatedMateriaisRoute: typeof AuthenticatedMateriaisRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedPontosRoute: typeof AuthenticatedPontosRoute
-  AuthenticatedProgramaRoute: typeof AuthenticatedProgramaRoute
+  AuthenticatedProgramaRoute: typeof AuthenticatedProgramaRouteWithChildren
   AuthenticatedProgramaIntakeRoute: typeof AuthenticatedProgramaIntakeRoute
+  AuthenticatedProgressoRoute: typeof AuthenticatedProgressoRoute
   AuthenticatedProtocoloRoute: typeof AuthenticatedProtocoloRouteWithChildren
   AuthenticatedSeuProtocoloRoute: typeof AuthenticatedSeuProtocoloRoute
   AuthenticatedAulasLessonIdRoute: typeof AuthenticatedAulasLessonIdRoute
@@ -740,15 +833,18 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedBoasVindasRoute: AuthenticatedBoasVindasRoute,
+  AuthenticatedBonusRoute: AuthenticatedBonusRoute,
   AuthenticatedDiagnosticoRoute: AuthenticatedDiagnosticoRoute,
   AuthenticatedFase2Route: AuthenticatedFase2Route,
   AuthenticatedFlacidezRoute: AuthenticatedFlacidezRoute,
   AuthenticatedHojeRoute: AuthenticatedHojeRoute,
   AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
+  AuthenticatedMateriaisRoute: AuthenticatedMateriaisRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedPontosRoute: AuthenticatedPontosRoute,
-  AuthenticatedProgramaRoute: AuthenticatedProgramaRoute,
+  AuthenticatedProgramaRoute: AuthenticatedProgramaRouteWithChildren,
   AuthenticatedProgramaIntakeRoute: AuthenticatedProgramaIntakeRoute,
+  AuthenticatedProgressoRoute: AuthenticatedProgressoRoute,
   AuthenticatedProtocoloRoute: AuthenticatedProtocoloRouteWithChildren,
   AuthenticatedSeuProtocoloRoute: AuthenticatedSeuProtocoloRoute,
   AuthenticatedAulasLessonIdRoute: AuthenticatedAulasLessonIdRoute,

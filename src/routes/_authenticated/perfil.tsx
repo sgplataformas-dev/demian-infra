@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { LogOut, MessageCircle, FileText, RotateCcw, Camera, Loader2, Pencil } from "lucide-react";
+import { LogOut, MessageCircle, FileText, RotateCcw, Camera, Loader2, Pencil, ChevronRight, TrendingUp, User as UserIcon } from "lucide-react";
 import { toast } from "sonner";
+import { BlobDecoration } from "@/components/BlobDecoration";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
   component: Perfil,
@@ -126,12 +127,14 @@ function Perfil() {
   const chartData = data.pesos.map((p, i) => ({ idx: i + 1, data: p.data, peso: p.peso }));
 
   return (
-    <div className="px-6 py-7">
-      <div className="flex items-center gap-4">
+    <div className="relative px-6 py-7">
+      <BlobDecoration className="pointer-events-none absolute right-0 top-0 h-32 w-48" />
+
+      <div className="relative flex items-center gap-4">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-primary text-2xl font-bold text-primary-foreground"
+          className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-primary/10 text-2xl font-bold text-primary"
           aria-label="Trocar foto de perfil"
         >
           {data.avatarUrl ? (
@@ -144,21 +147,20 @@ function Perfil() {
             />
           ) : (
             <span className="flex h-full w-full items-center justify-center">
-              {(data.nome || "?").slice(0, 1).toUpperCase()}
+              <UserIcon className="h-9 w-9" />
             </span>
           )}
-          <span className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-1 bg-black/50 py-1 text-[10px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
-            {uploading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Camera className="h-3 w-3" />}
-            {uploading ? "Enviando" : "Trocar"}
-          </span>
           {uploading && (
             <span className="absolute inset-0 flex items-center justify-center bg-black/40">
               <Loader2 className="h-5 w-5 animate-spin text-white" />
             </span>
           )}
+          <span className="absolute -bottom-0.5 -right-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-gold text-gold-foreground shadow-sm">
+            <Camera className="h-3.5 w-3.5" />
+          </span>
         </button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-lg font-bold">{data.nome || "Você"}</p>
+          <p className="truncate text-lg font-bold">{data.nome || "Seu perfil"}</p>
           <p className="truncate text-xs text-muted-foreground">{data.email}</p>
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
             <button
@@ -242,8 +244,16 @@ function Perfil() {
       )}
 
 
-      <section className="mt-7 rounded-2xl border border-border bg-card p-5">
-        <h2 className="text-base font-bold">Sua evolução de peso</h2>
+      <section className="relative mt-7 rounded-3xl border border-border bg-card p-5 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold">
+            <TrendingUp className="h-5 w-5" />
+          </div>
+          <div>
+            <h2 className="text-base font-bold leading-tight">Sua evolução</h2>
+            <p className="text-xs text-muted-foreground">Acompanhe seus registros.</p>
+          </div>
+        </div>
         {chartData.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">Nenhum peso registrado ainda.</p>
         ) : (
@@ -271,6 +281,7 @@ function Perfil() {
               className="h-12"
             />
             <Button
+              variant="gold"
               className="h-12"
               disabled={!peso || salvarPeso.isPending}
               onClick={() => salvarPeso.mutate(parseFloat(peso))}
@@ -281,8 +292,8 @@ function Perfil() {
         </div>
       </section>
 
-      <nav className="mt-7 space-y-2">
-        <MenuItem icon={RotateCcw} label="Refazer avaliação" onClick={() => navigate({ to: "/intake" })} />
+      <nav className="mt-7 space-y-3">
+        <MenuItem icon={RotateCcw} label="Refazer avaliação" onClick={() => navigate({ to: "/programa-intake" })} />
         <MenuItem
           icon={MessageCircle}
           label="Suporte no WhatsApp"
@@ -308,31 +319,34 @@ function MenuItem({
   href?: string;
   variant?: "destructive";
 }) {
-  const className = `flex w-full items-center gap-3 rounded-2xl border border-border bg-card px-4 py-4 text-left text-base ${
-    variant === "destructive" ? "text-destructive" : ""
+  const className = `flex w-full items-center gap-3 rounded-2xl border border-border bg-card px-4 py-4 text-left text-base shadow-sm transition active:scale-[0.99] ${
+    variant === "destructive" ? "text-destructive" : "text-foreground"
   }`;
+  const badgeClassName = `flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
+    variant === "destructive" ? "bg-destructive/10" : "bg-primary/10"
+  }`;
+
+  const content = (
+    <>
+      <span className={badgeClassName}>
+        <Icon className="h-4.5 w-4.5" />
+      </span>
+      <span className="flex-1 font-medium">{label}</span>
+      <ChevronRight className="h-4 w-4 shrink-0 opacity-50" />
+    </>
+  );
 
   if (href) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
-        <Icon className="h-5 w-5" />
-        <span className="font-medium">{label}</span>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
       </a>
     );
   }
 
   return (
-    <button
-      onClick={onClick}
-      className={className}
-    >
-      <Icon className="h-5 w-5" />
-      <span className="font-medium">{label}</span>
+    <button onClick={onClick} className={className}>
+      {content}
     </button>
   );
 }

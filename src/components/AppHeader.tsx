@@ -27,10 +27,10 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-40 mx-auto flex h-14 max-w-md items-center justify-between border-b border-border bg-background/90 px-6 backdrop-blur">
-      <Link to="/hoje" className="text-lg font-semibold tracking-wide" aria-label="Demian">
+      <Link to="/hoje" className="text-lg font-bold tracking-wide text-primary" aria-label="Demian">
         Demian
       </Link>
-      {isAdmin && (
+      {isAdmin ? (
         <Link
           to="/admin"
           className="flex items-center gap-1 text-xs font-medium text-primary"
@@ -38,6 +38,10 @@ export function AppHeader() {
         >
           <ShieldCheck className="h-4 w-4" /> Admin
         </Link>
+      ) : (
+        <span className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+          <ShieldCheck className="h-3.5 w-3.5" /> Área do aluno
+        </span>
       )}
     </header>
   );
