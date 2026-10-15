@@ -43,11 +43,10 @@ function isLegacyImport(row: PurchaseRow) {
 /**
  * Regra de acesso: vale o evento de pagamento mais recente — mas avaliado
  * POR PRODUTO, nunca misturando produtos diferentes. Reembolso/chargeback de
- * um produto (ex.: Flacidez Nunca Mais) nunca derruba o login de quem ainda
- * tem outro produto (ex.: Programa Active) com pagamento ativo — cada
- * produto entra numa "família" separada e basta UMA família ativa pra manter
- * o acesso à plataforma. O gate de conteúdo específico de cada produto
- * (ex.: hasFlacidezAccess) continua responsável por checar aquele produto
+ * um produto nunca derruba o login de quem ainda tem outro produto com
+ * pagamento ativo — cada produto entra numa "família" separada e basta UMA
+ * família ativa pra manter o acesso à plataforma. O gate de conteúdo
+ * específico de cada produto continua responsável por checar aquele produto
  * sozinho.
  */
 export function hasActiveAccess(rows: PurchaseRow[] | null | undefined): boolean {

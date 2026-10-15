@@ -60,7 +60,7 @@ export const Route = createFileRoute('/api/public/check-access')({
 
         // Acesso à plataforma = existe compra e o último evento de pagamento não é estorno.
         const { data: purchases, error } = await supabaseAdmin
-          .from('programa_active_purchases')
+          .from('purchases')
           .select('payment_status, payt_order_id, product_name, updated_at, purchase_date, created_at')
           .eq('email', email)
 

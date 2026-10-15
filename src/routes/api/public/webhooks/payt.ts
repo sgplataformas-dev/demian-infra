@@ -197,7 +197,7 @@ export const Route = createFileRoute('/api/public/webhooks/payt')({
             const { data: updatedPurchases } = await retry(
               async () =>
                 await supabaseAdmin
-                  .from('programa_active_purchases')
+                  .from('purchases')
                   .update({
                     payment_status: status,
                     raw_payload: raw as any,
@@ -218,33 +218,13 @@ export const Route = createFileRoute('/api/public/webhooks/payt')({
               const { data: stillActive } = await retry(
                 async () =>
                   await supabaseAdmin
-                    .from('programa_active_purchases')
+                    .from('purchases')
                     .select('id, payment_status, payt_order_id, product_name, updated_at, purchase_date, created_at')
                     .eq('email', email),
                 { retries: 3, label: 'payt-refund-check-active' },
               )
 
-              let hasActive = hasActiveAccess(stillActive as any)
-
-              // Segunda checagem antes de banir: a Payt as vezes so manda o
-              // webhook do produto base (Programa Active) pra tabela do
-              // dashboard (outro sistema, mesmo banco) e nao pra esta, ex.
-              // quando o cliente compra o principal e um upsell na sequencia
-              // e so o upsell falha/cancela. Sem essa checagem, cancelar so o
-              // upsell bania clientes que tinham a compra principal aprovada.
-              if (!hasActive) {
-                const { data: dashboardApproved } = await retry(
-                  async () =>
-                    await supabaseAdmin
-                      .from('purchases')
-                      .select('id')
-                      .eq('email', email)
-                      .eq('status', 'approved')
-                      .limit(1),
-                  { retries: 3, label: 'payt-refund-check-dashboard-purchases' },
-                )
-                if (dashboardApproved && dashboardApproved.length > 0) hasActive = true
-              }
+              const hasActive = hasActiveAccess(stillActive as any)
 
               if (!hasActive && affectedUserId) {
                 try {
@@ -304,7 +284,7 @@ export const Route = createFileRoute('/api/public/webhooks/payt')({
           const { error: initialPurchaseErr } = await retry(
             async () =>
               await supabaseAdmin
-                .from('programa_active_purchases')
+                .from('purchases')
                 .upsert(
                   {
                     email,

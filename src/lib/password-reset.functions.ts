@@ -14,7 +14,7 @@ export const requestPasswordReset = createServerFn({ method: "POST" })
 
     // 1) Verifica se há alguma compra associada ao e-mail
     const { data: purchases, error: purchasesErr } = await supabaseAdmin
-      .from("programa_active_purchases")
+      .from("purchases")
       .select("payment_status, payt_order_id, product_name, updated_at, purchase_date, created_at")
       .eq("email", email);
 
