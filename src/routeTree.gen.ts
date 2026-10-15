@@ -23,6 +23,8 @@ import { Route as AuthenticatedHojeRouteImport } from './routes/_authenticated/h
 import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedPontosRouteImport } from './routes/_authenticated/pontos'
+import { Route as AuthenticatedProgramaRouteImport } from './routes/_authenticated/programa'
+import { Route as AuthenticatedProgramaIntakeRouteImport } from './routes/_authenticated/programa-intake'
 import { Route as AuthenticatedProtocoloRouteImport } from './routes/_authenticated/protocolo'
 import { Route as AuthenticatedSeuProtocoloRouteImport } from './routes/_authenticated/seu-protocolo'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -112,6 +114,17 @@ const AuthenticatedPontosRoute = AuthenticatedPontosRouteImport.update({
   path: '/pontos',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedProgramaRoute = AuthenticatedProgramaRouteImport.update({
+  id: '/programa',
+  path: '/programa',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedProgramaIntakeRoute =
+  AuthenticatedProgramaIntakeRouteImport.update({
+    id: '/programa-intake',
+    path: '/programa-intake',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedProtocoloRoute = AuthenticatedProtocoloRouteImport.update({
   id: '/protocolo',
   path: '/protocolo',
@@ -227,6 +240,8 @@ export interface FileRoutesByFullPath {
   '/intake': typeof AuthenticatedIntakeRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
+  '/programa': typeof AuthenticatedProgramaRoute
+  '/programa-intake': typeof AuthenticatedProgramaIntakeRoute
   '/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
@@ -260,6 +275,8 @@ export interface FileRoutesByTo {
   '/intake': typeof AuthenticatedIntakeRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
+  '/programa': typeof AuthenticatedProgramaRoute
+  '/programa-intake': typeof AuthenticatedProgramaIntakeRoute
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
@@ -294,6 +311,8 @@ export interface FileRoutesById {
   '/_authenticated/intake': typeof AuthenticatedIntakeRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/pontos': typeof AuthenticatedPontosRoute
+  '/_authenticated/programa': typeof AuthenticatedProgramaRoute
+  '/_authenticated/programa-intake': typeof AuthenticatedProgramaIntakeRoute
   '/_authenticated/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
   '/_authenticated/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
@@ -329,6 +348,8 @@ export interface FileRouteTypes {
     | '/intake'
     | '/perfil'
     | '/pontos'
+    | '/programa'
+    | '/programa-intake'
     | '/protocolo'
     | '/seu-protocolo'
     | '/api/chat'
@@ -362,6 +383,8 @@ export interface FileRouteTypes {
     | '/intake'
     | '/perfil'
     | '/pontos'
+    | '/programa'
+    | '/programa-intake'
     | '/seu-protocolo'
     | '/api/chat'
     | '/aulas/$lessonId'
@@ -395,6 +418,8 @@ export interface FileRouteTypes {
     | '/_authenticated/intake'
     | '/_authenticated/perfil'
     | '/_authenticated/pontos'
+    | '/_authenticated/programa'
+    | '/_authenticated/programa-intake'
     | '/_authenticated/protocolo'
     | '/_authenticated/seu-protocolo'
     | '/api/chat'
@@ -529,6 +554,20 @@ declare module '@tanstack/react-router' {
       path: '/pontos'
       fullPath: '/pontos'
       preLoaderRoute: typeof AuthenticatedPontosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/programa': {
+      id: '/_authenticated/programa'
+      path: '/programa'
+      fullPath: '/programa'
+      preLoaderRoute: typeof AuthenticatedProgramaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/programa-intake': {
+      id: '/_authenticated/programa-intake'
+      path: '/programa-intake'
+      fullPath: '/programa-intake'
+      preLoaderRoute: typeof AuthenticatedProgramaIntakeRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/protocolo': {
@@ -688,6 +727,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedPontosRoute: typeof AuthenticatedPontosRoute
+  AuthenticatedProgramaRoute: typeof AuthenticatedProgramaRoute
+  AuthenticatedProgramaIntakeRoute: typeof AuthenticatedProgramaIntakeRoute
   AuthenticatedProtocoloRoute: typeof AuthenticatedProtocoloRouteWithChildren
   AuthenticatedSeuProtocoloRoute: typeof AuthenticatedSeuProtocoloRoute
   AuthenticatedAulasLessonIdRoute: typeof AuthenticatedAulasLessonIdRoute
@@ -706,6 +747,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedPontosRoute: AuthenticatedPontosRoute,
+  AuthenticatedProgramaRoute: AuthenticatedProgramaRoute,
+  AuthenticatedProgramaIntakeRoute: AuthenticatedProgramaIntakeRoute,
   AuthenticatedProtocoloRoute: AuthenticatedProtocoloRouteWithChildren,
   AuthenticatedSeuProtocoloRoute: AuthenticatedSeuProtocoloRoute,
   AuthenticatedAulasLessonIdRoute: AuthenticatedAulasLessonIdRoute,

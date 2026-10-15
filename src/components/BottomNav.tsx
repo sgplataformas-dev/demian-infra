@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Home, PlayCircle, ListChecks, User } from "lucide-react";
+import { Home, PlayCircle, ListChecks, User, Calendar } from "lucide-react";
 import { WaistIcon } from "@/components/icons/WaistIcon";
 
 const items = [
   { to: "/hoje", label: "Home", icon: Home },
+  { to: "/programa", label: "Programa", icon: Calendar },
   { to: "/aulas", label: "Aulas Bônus", icon: PlayCircle },
   { to: "/flacidez", label: "Extra", icon: WaistIcon },
   { to: "/protocolo", label: "Protocolo", icon: ListChecks },

@@ -10,7 +10,32 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.18"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -185,6 +210,48 @@ export type Database = {
           missao_chave?: string
           user_id?: string
           valor?: number | null
+        }
+        Relationships: []
+      }
+      demian_profiles: {
+        Row: {
+          created_at: string
+          has_bonus: boolean
+          id: string
+          intestino: string
+          lactose: string
+          remedios_afetam_sono: boolean
+          sono: string
+          started_at: string
+          turno: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          has_bonus?: boolean
+          id?: string
+          intestino: string
+          lactose: string
+          remedios_afetam_sono?: boolean
+          sono: string
+          started_at?: string
+          turno: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          has_bonus?: boolean
+          id?: string
+          intestino?: string
+          lactose?: string
+          remedios_afetam_sono?: boolean
+          sono?: string
+          started_at?: string
+          turno?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -480,7 +547,7 @@ export type Database = {
         }
         Relationships: []
       }
-      programa_active_purchases: {
+      purchases: {
         Row: {
           amount: number | null
           created_at: string
@@ -696,7 +763,6 @@ export type Database = {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
       }
-      email_queue_dispatch: { Args: never; Returns: undefined }
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
@@ -879,6 +945,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       app_role: ["admin", "user"],
