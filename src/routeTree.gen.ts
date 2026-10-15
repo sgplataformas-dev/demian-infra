@@ -9,48 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermosRouteImport } from './routes/termos'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as AuthenticatedSeuProtocoloRouteImport } from './routes/_authenticated/seu-protocolo'
-import { Route as AuthenticatedQuizFase1RouteImport } from './routes/_authenticated/quiz-fase-1'
-import { Route as AuthenticatedProtocoloRouteImport } from './routes/_authenticated/protocolo'
-import { Route as AuthenticatedPontosRouteImport } from './routes/_authenticated/pontos'
-import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
-import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
-import { Route as AuthenticatedHojeRouteImport } from './routes/_authenticated/hoje'
-import { Route as AuthenticatedFlacidezRouteImport } from './routes/_authenticated/flacidez'
-import { Route as AuthenticatedFase2RouteImport } from './routes/_authenticated/fase-2'
-import { Route as AuthenticatedDiagnosticoRouteImport } from './routes/_authenticated/diagnostico'
-import { Route as AuthenticatedBoasVindasRouteImport } from './routes/_authenticated/boas-vindas'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedProtocoloIndexRouteImport } from './routes/_authenticated/protocolo.index'
+import { Route as AuthenticatedBoasVindasRouteImport } from './routes/_authenticated/boas-vindas'
+import { Route as AuthenticatedDiagnosticoRouteImport } from './routes/_authenticated/diagnostico'
+import { Route as AuthenticatedFase2RouteImport } from './routes/_authenticated/fase-2'
+import { Route as AuthenticatedFlacidezRouteImport } from './routes/_authenticated/flacidez'
+import { Route as AuthenticatedHojeRouteImport } from './routes/_authenticated/hoje'
+import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as AuthenticatedPontosRouteImport } from './routes/_authenticated/pontos'
+import { Route as AuthenticatedProtocoloRouteImport } from './routes/_authenticated/protocolo'
+import { Route as AuthenticatedSeuProtocoloRouteImport } from './routes/_authenticated/seu-protocolo'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAulasIndexRouteImport } from './routes/_authenticated/aulas.index'
-import { Route as ApiPublicGrantAccessRouteImport } from './routes/api/public/grant-access'
-import { Route as ApiPublicCheckAccessRouteImport } from './routes/api/public/check-access'
-import { Route as AuthenticatedSugestoesChefeTipoRouteImport } from './routes/_authenticated/sugestoes-chefe.$tipo'
-import { Route as AuthenticatedProtocoloFase2RouteImport } from './routes/_authenticated/protocolo.fase-2'
-import { Route as AuthenticatedProtocoloFase1RouteImport } from './routes/_authenticated/protocolo.fase-1'
 import { Route as AuthenticatedAulasLessonIdRouteImport } from './routes/_authenticated/aulas.$lessonId'
-import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
-import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
-import { Route as ApiPublicWebhooksWhatsappCommandsRouteImport } from './routes/api/public/webhooks/whatsapp-commands'
-import { Route as ApiPublicWebhooksPaytRouteImport } from './routes/api/public/webhooks/payt'
+import { Route as AuthenticatedProtocoloIndexRouteImport } from './routes/_authenticated/protocolo.index'
+import { Route as AuthenticatedProtocoloFase1RouteImport } from './routes/_authenticated/protocolo.fase-1'
+import { Route as AuthenticatedProtocoloFase2RouteImport } from './routes/_authenticated/protocolo.fase-2'
+import { Route as AuthenticatedSugestoesChefeTipoRouteImport } from './routes/_authenticated/sugestoes-chefe.$tipo'
+import { Route as ApiPublicCheckAccessRouteImport } from './routes/api/public/check-access'
+import { Route as ApiPublicGrantAccessRouteImport } from './routes/api/public/grant-access'
 import { Route as AuthenticatedAulasModuloModuloIdRouteImport } from './routes/_authenticated/aulas.modulo.$moduloId'
+import { Route as ApiPublicWebhooksPaytRouteImport } from './routes/api/public/webhooks/payt'
+import { Route as ApiPublicWebhooksWhatsappCommandsRouteImport } from './routes/api/public/webhooks/whatsapp-commands'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as ApiPublicWebhooksPaytReprocessRouteImport } from './routes/api/public/webhooks/payt.reprocess'
 
-const TermosRoute = TermosRouteImport.update({
-  id: '/termos',
-  path: '/termos',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -58,64 +56,24 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/api/chat',
-  path: '/api/chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedSeuProtocoloRoute =
-  AuthenticatedSeuProtocoloRouteImport.update({
-    id: '/seu-protocolo',
-    path: '/seu-protocolo',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedQuizFase1Route = AuthenticatedQuizFase1RouteImport.update({
-  id: '/quiz-fase-1',
-  path: '/quiz-fase-1',
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedProtocoloRoute = AuthenticatedProtocoloRouteImport.update({
-  id: '/protocolo',
-  path: '/protocolo',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedPontosRoute = AuthenticatedPontosRouteImport.update({
-  id: '/pontos',
-  path: '/pontos',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedIntakeRoute = AuthenticatedIntakeRouteImport.update({
-  id: '/intake',
-  path: '/intake',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedHojeRoute = AuthenticatedHojeRouteImport.update({
-  id: '/hoje',
-  path: '/hoje',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedFlacidezRoute = AuthenticatedFlacidezRouteImport.update({
-  id: '/flacidez',
-  path: '/flacidez',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedFase2Route = AuthenticatedFase2RouteImport.update({
-  id: '/fase-2',
-  path: '/fase-2',
+const AuthenticatedBoasVindasRoute = AuthenticatedBoasVindasRouteImport.update({
+  id: '/boas-vindas',
+  path: '/boas-vindas',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDiagnosticoRoute =
@@ -124,47 +82,67 @@ const AuthenticatedDiagnosticoRoute =
     path: '/diagnostico',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedBoasVindasRoute = AuthenticatedBoasVindasRouteImport.update({
-  id: '/boas-vindas',
-  path: '/boas-vindas',
+const AuthenticatedFase2Route = AuthenticatedFase2RouteImport.update({
+  id: '/fase-2',
+  path: '/fase-2',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AuthenticatedFlacidezRoute = AuthenticatedFlacidezRouteImport.update({
+  id: '/flacidez',
+  path: '/flacidez',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedProtocoloIndexRoute =
-  AuthenticatedProtocoloIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedProtocoloRoute,
+const AuthenticatedHojeRoute = AuthenticatedHojeRouteImport.update({
+  id: '/hoje',
+  path: '/hoje',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedIntakeRoute = AuthenticatedIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPontosRoute = AuthenticatedPontosRouteImport.update({
+  id: '/pontos',
+  path: '/pontos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedProtocoloRoute = AuthenticatedProtocoloRouteImport.update({
+  id: '/protocolo',
+  path: '/protocolo',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSeuProtocoloRoute =
+  AuthenticatedSeuProtocoloRouteImport.update({
+    id: '/seu-protocolo',
+    path: '/seu-protocolo',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAulasIndexRoute = AuthenticatedAulasIndexRouteImport.update({
   id: '/aulas/',
   path: '/aulas/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const ApiPublicGrantAccessRoute = ApiPublicGrantAccessRouteImport.update({
-  id: '/api/public/grant-access',
-  path: '/api/public/grant-access',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicCheckAccessRoute = ApiPublicCheckAccessRouteImport.update({
-  id: '/api/public/check-access',
-  path: '/api/public/check-access',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedSugestoesChefeTipoRoute =
-  AuthenticatedSugestoesChefeTipoRouteImport.update({
-    id: '/sugestoes-chefe/$tipo',
-    path: '/sugestoes-chefe/$tipo',
+const AuthenticatedAulasLessonIdRoute =
+  AuthenticatedAulasLessonIdRouteImport.update({
+    id: '/aulas/$lessonId',
+    path: '/aulas/$lessonId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedProtocoloFase2Route =
-  AuthenticatedProtocoloFase2RouteImport.update({
-    id: '/fase-2',
-    path: '/fase-2',
+const AuthenticatedProtocoloIndexRoute =
+  AuthenticatedProtocoloIndexRouteImport.update({
+    id: '/',
+    path: '/',
     getParentRoute: () => AuthenticatedProtocoloRoute,
   } as any)
 const AuthenticatedProtocoloFase1Route =
@@ -173,26 +151,37 @@ const AuthenticatedProtocoloFase1Route =
     path: '/fase-1',
     getParentRoute: () => AuthenticatedProtocoloRoute,
   } as any)
-const AuthenticatedAulasLessonIdRoute =
-  AuthenticatedAulasLessonIdRouteImport.update({
-    id: '/aulas/$lessonId',
-    path: '/aulas/$lessonId',
+const AuthenticatedProtocoloFase2Route =
+  AuthenticatedProtocoloFase2RouteImport.update({
+    id: '/fase-2',
+    path: '/fase-2',
+    getParentRoute: () => AuthenticatedProtocoloRoute,
+  } as any)
+const AuthenticatedSugestoesChefeTipoRoute =
+  AuthenticatedSugestoesChefeTipoRouteImport.update({
+    id: '/sugestoes-chefe/$tipo',
+    path: '/sugestoes-chefe/$tipo',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const LovableEmailQueueProcessRoute =
-  LovableEmailQueueProcessRouteImport.update({
-    id: '/lovable/email/queue/process',
-    path: '/lovable/email/queue/process',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
-  id: '/lovable/email/auth/webhook',
-  path: '/lovable/email/auth/webhook',
+const ApiPublicCheckAccessRoute = ApiPublicCheckAccessRouteImport.update({
+  id: '/api/public/check-access',
+  path: '/api/public/check-access',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
-  id: '/lovable/email/auth/preview',
-  path: '/lovable/email/auth/preview',
+const ApiPublicGrantAccessRoute = ApiPublicGrantAccessRouteImport.update({
+  id: '/api/public/grant-access',
+  path: '/api/public/grant-access',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAulasModuloModuloIdRoute =
+  AuthenticatedAulasModuloModuloIdRouteImport.update({
+    id: '/aulas/modulo/$moduloId',
+    path: '/aulas/modulo/$moduloId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const ApiPublicWebhooksPaytRoute = ApiPublicWebhooksPaytRouteImport.update({
+  id: '/api/public/webhooks/payt',
+  path: '/api/public/webhooks/payt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicWebhooksWhatsappCommandsRoute =
@@ -201,16 +190,21 @@ const ApiPublicWebhooksWhatsappCommandsRoute =
     path: '/api/public/webhooks/whatsapp-commands',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicWebhooksPaytRoute = ApiPublicWebhooksPaytRouteImport.update({
-  id: '/api/public/webhooks/payt',
-  path: '/api/public/webhooks/payt',
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAulasModuloModuloIdRoute =
-  AuthenticatedAulasModuloModuloIdRouteImport.update({
-    id: '/aulas/modulo/$moduloId',
-    path: '/aulas/modulo/$moduloId',
-    getParentRoute: () => AuthenticatedRoute,
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const ApiPublicWebhooksPaytReprocessRoute =
   ApiPublicWebhooksPaytReprocessRouteImport.update({
@@ -234,7 +228,6 @@ export interface FileRoutesByFullPath {
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
   '/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
-  '/quiz-fase-1': typeof AuthenticatedQuizFase1Route
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
@@ -267,7 +260,6 @@ export interface FileRoutesByTo {
   '/intake': typeof AuthenticatedIntakeRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/pontos': typeof AuthenticatedPontosRoute
-  '/quiz-fase-1': typeof AuthenticatedQuizFase1Route
   '/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
@@ -303,7 +295,6 @@ export interface FileRoutesById {
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/pontos': typeof AuthenticatedPontosRoute
   '/_authenticated/protocolo': typeof AuthenticatedProtocoloRouteWithChildren
-  '/_authenticated/quiz-fase-1': typeof AuthenticatedQuizFase1Route
   '/_authenticated/seu-protocolo': typeof AuthenticatedSeuProtocoloRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/aulas/$lessonId': typeof AuthenticatedAulasLessonIdRoute
@@ -339,7 +330,6 @@ export interface FileRouteTypes {
     | '/perfil'
     | '/pontos'
     | '/protocolo'
-    | '/quiz-fase-1'
     | '/seu-protocolo'
     | '/api/chat'
     | '/aulas/$lessonId'
@@ -372,7 +362,6 @@ export interface FileRouteTypes {
     | '/intake'
     | '/perfil'
     | '/pontos'
-    | '/quiz-fase-1'
     | '/seu-protocolo'
     | '/api/chat'
     | '/aulas/$lessonId'
@@ -407,7 +396,6 @@ export interface FileRouteTypes {
     | '/_authenticated/perfil'
     | '/_authenticated/pontos'
     | '/_authenticated/protocolo'
-    | '/_authenticated/quiz-fase-1'
     | '/_authenticated/seu-protocolo'
     | '/api/chat'
     | '/_authenticated/aulas/$lessonId'
@@ -445,25 +433,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/termos': {
-      id: '/termos'
-      path: '/termos'
-      fullPath: '/termos'
-      preLoaderRoute: typeof TermosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -473,88 +447,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/api/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/seu-protocolo': {
-      id: '/_authenticated/seu-protocolo'
-      path: '/seu-protocolo'
-      fullPath: '/seu-protocolo'
-      preLoaderRoute: typeof AuthenticatedSeuProtocoloRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/quiz-fase-1': {
-      id: '/_authenticated/quiz-fase-1'
-      path: '/quiz-fase-1'
-      fullPath: '/quiz-fase-1'
-      preLoaderRoute: typeof AuthenticatedQuizFase1RouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/protocolo': {
-      id: '/_authenticated/protocolo'
-      path: '/protocolo'
-      fullPath: '/protocolo'
-      preLoaderRoute: typeof AuthenticatedProtocoloRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/pontos': {
-      id: '/_authenticated/pontos'
-      path: '/pontos'
-      fullPath: '/pontos'
-      preLoaderRoute: typeof AuthenticatedPontosRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/perfil': {
-      id: '/_authenticated/perfil'
-      path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/intake': {
-      id: '/_authenticated/intake'
-      path: '/intake'
-      fullPath: '/intake'
-      preLoaderRoute: typeof AuthenticatedIntakeRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/hoje': {
-      id: '/_authenticated/hoje'
-      path: '/hoje'
-      fullPath: '/hoje'
-      preLoaderRoute: typeof AuthenticatedHojeRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/flacidez': {
-      id: '/_authenticated/flacidez'
-      path: '/flacidez'
-      fullPath: '/flacidez'
-      preLoaderRoute: typeof AuthenticatedFlacidezRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/fase-2': {
-      id: '/_authenticated/fase-2'
-      path: '/fase-2'
-      fullPath: '/fase-2'
-      preLoaderRoute: typeof AuthenticatedFase2RouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/diagnostico': {
-      id: '/_authenticated/diagnostico'
-      path: '/diagnostico'
-      fullPath: '/diagnostico'
-      preLoaderRoute: typeof AuthenticatedDiagnosticoRouteImport
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/boas-vindas': {
@@ -564,11 +482,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBoasVindasRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/diagnostico': {
+      id: '/_authenticated/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/diagnostico'
+      preLoaderRoute: typeof AuthenticatedDiagnosticoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/fase-2': {
+      id: '/_authenticated/fase-2'
+      path: '/fase-2'
+      fullPath: '/fase-2'
+      preLoaderRoute: typeof AuthenticatedFase2RouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/flacidez': {
+      id: '/_authenticated/flacidez'
+      path: '/flacidez'
+      fullPath: '/flacidez'
+      preLoaderRoute: typeof AuthenticatedFlacidezRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/hoje': {
+      id: '/_authenticated/hoje'
+      path: '/hoje'
+      fullPath: '/hoje'
+      preLoaderRoute: typeof AuthenticatedHojeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/intake': {
+      id: '/_authenticated/intake'
+      path: '/intake'
+      fullPath: '/intake'
+      preLoaderRoute: typeof AuthenticatedIntakeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pontos': {
+      id: '/_authenticated/pontos'
+      path: '/pontos'
+      fullPath: '/pontos'
+      preLoaderRoute: typeof AuthenticatedPontosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/protocolo': {
+      id: '/_authenticated/protocolo'
+      path: '/protocolo'
+      fullPath: '/protocolo'
+      preLoaderRoute: typeof AuthenticatedProtocoloRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/seu-protocolo': {
+      id: '/_authenticated/seu-protocolo'
+      path: '/seu-protocolo'
+      fullPath: '/seu-protocolo'
+      preLoaderRoute: typeof AuthenticatedSeuProtocoloRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/aulas/': {
+      id: '/_authenticated/aulas/'
+      path: '/aulas'
+      fullPath: '/aulas/'
+      preLoaderRoute: typeof AuthenticatedAulasIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/aulas/$lessonId': {
+      id: '/_authenticated/aulas/$lessonId'
+      path: '/aulas/$lessonId'
+      fullPath: '/aulas/$lessonId'
+      preLoaderRoute: typeof AuthenticatedAulasLessonIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/protocolo/': {
@@ -578,33 +573,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProtocoloIndexRouteImport
       parentRoute: typeof AuthenticatedProtocoloRoute
     }
-    '/_authenticated/aulas/': {
-      id: '/_authenticated/aulas/'
-      path: '/aulas'
-      fullPath: '/aulas/'
-      preLoaderRoute: typeof AuthenticatedAulasIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/api/public/grant-access': {
-      id: '/api/public/grant-access'
-      path: '/api/public/grant-access'
-      fullPath: '/api/public/grant-access'
-      preLoaderRoute: typeof ApiPublicGrantAccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/check-access': {
-      id: '/api/public/check-access'
-      path: '/api/public/check-access'
-      fullPath: '/api/public/check-access'
-      preLoaderRoute: typeof ApiPublicCheckAccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/sugestoes-chefe/$tipo': {
-      id: '/_authenticated/sugestoes-chefe/$tipo'
-      path: '/sugestoes-chefe/$tipo'
-      fullPath: '/sugestoes-chefe/$tipo'
-      preLoaderRoute: typeof AuthenticatedSugestoesChefeTipoRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/_authenticated/protocolo/fase-1': {
+      id: '/_authenticated/protocolo/fase-1'
+      path: '/fase-1'
+      fullPath: '/protocolo/fase-1'
+      preLoaderRoute: typeof AuthenticatedProtocoloFase1RouteImport
+      parentRoute: typeof AuthenticatedProtocoloRoute
     }
     '/_authenticated/protocolo/fase-2': {
       id: '/_authenticated/protocolo/fase-2'
@@ -613,39 +587,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProtocoloFase2RouteImport
       parentRoute: typeof AuthenticatedProtocoloRoute
     }
-    '/_authenticated/protocolo/fase-1': {
-      id: '/_authenticated/protocolo/fase-1'
-      path: '/fase-1'
-      fullPath: '/protocolo/fase-1'
-      preLoaderRoute: typeof AuthenticatedProtocoloFase1RouteImport
-      parentRoute: typeof AuthenticatedProtocoloRoute
-    }
-    '/_authenticated/aulas/$lessonId': {
-      id: '/_authenticated/aulas/$lessonId'
-      path: '/aulas/$lessonId'
-      fullPath: '/aulas/$lessonId'
-      preLoaderRoute: typeof AuthenticatedAulasLessonIdRouteImport
+    '/_authenticated/sugestoes-chefe/$tipo': {
+      id: '/_authenticated/sugestoes-chefe/$tipo'
+      path: '/sugestoes-chefe/$tipo'
+      fullPath: '/sugestoes-chefe/$tipo'
+      preLoaderRoute: typeof AuthenticatedSugestoesChefeTipoRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/lovable/email/queue/process': {
-      id: '/lovable/email/queue/process'
-      path: '/lovable/email/queue/process'
-      fullPath: '/lovable/email/queue/process'
-      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+    '/api/public/check-access': {
+      id: '/api/public/check-access'
+      path: '/api/public/check-access'
+      fullPath: '/api/public/check-access'
+      preLoaderRoute: typeof ApiPublicCheckAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/webhook': {
-      id: '/lovable/email/auth/webhook'
-      path: '/lovable/email/auth/webhook'
-      fullPath: '/lovable/email/auth/webhook'
-      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+    '/api/public/grant-access': {
+      id: '/api/public/grant-access'
+      path: '/api/public/grant-access'
+      fullPath: '/api/public/grant-access'
+      preLoaderRoute: typeof ApiPublicGrantAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/preview': {
-      id: '/lovable/email/auth/preview'
-      path: '/lovable/email/auth/preview'
-      fullPath: '/lovable/email/auth/preview'
-      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+    '/_authenticated/aulas/modulo/$moduloId': {
+      id: '/_authenticated/aulas/modulo/$moduloId'
+      path: '/aulas/modulo/$moduloId'
+      fullPath: '/aulas/modulo/$moduloId'
+      preLoaderRoute: typeof AuthenticatedAulasModuloModuloIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/api/public/webhooks/payt': {
+      id: '/api/public/webhooks/payt'
+      path: '/api/public/webhooks/payt'
+      fullPath: '/api/public/webhooks/payt'
+      preLoaderRoute: typeof ApiPublicWebhooksPaytRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/webhooks/whatsapp-commands': {
@@ -655,19 +629,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicWebhooksWhatsappCommandsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/webhooks/payt': {
-      id: '/api/public/webhooks/payt'
-      path: '/api/public/webhooks/payt'
-      fullPath: '/api/public/webhooks/payt'
-      preLoaderRoute: typeof ApiPublicWebhooksPaytRouteImport
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/aulas/modulo/$moduloId': {
-      id: '/_authenticated/aulas/modulo/$moduloId'
-      path: '/aulas/modulo/$moduloId'
-      fullPath: '/aulas/modulo/$moduloId'
-      preLoaderRoute: typeof AuthenticatedAulasModuloModuloIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/webhooks/payt/reprocess': {
       id: '/api/public/webhooks/payt/reprocess'
@@ -708,7 +689,6 @@ interface AuthenticatedRouteChildren {
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedPontosRoute: typeof AuthenticatedPontosRoute
   AuthenticatedProtocoloRoute: typeof AuthenticatedProtocoloRouteWithChildren
-  AuthenticatedQuizFase1Route: typeof AuthenticatedQuizFase1Route
   AuthenticatedSeuProtocoloRoute: typeof AuthenticatedSeuProtocoloRoute
   AuthenticatedAulasLessonIdRoute: typeof AuthenticatedAulasLessonIdRoute
   AuthenticatedSugestoesChefeTipoRoute: typeof AuthenticatedSugestoesChefeTipoRoute
@@ -727,7 +707,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedPontosRoute: AuthenticatedPontosRoute,
   AuthenticatedProtocoloRoute: AuthenticatedProtocoloRouteWithChildren,
-  AuthenticatedQuizFase1Route: AuthenticatedQuizFase1Route,
   AuthenticatedSeuProtocoloRoute: AuthenticatedSeuProtocoloRoute,
   AuthenticatedAulasLessonIdRoute: AuthenticatedAulasLessonIdRoute,
   AuthenticatedSugestoesChefeTipoRoute: AuthenticatedSugestoesChefeTipoRoute,
