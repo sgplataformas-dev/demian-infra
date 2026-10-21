@@ -5,6 +5,7 @@ import { Play, ArrowRight, Calendar, Heart } from "lucide-react";
 import { getProgramStatus } from "@/lib/program-profile.functions";
 import { PHASES, type PhaseId } from "@/content/program-engine";
 import { PHASE_ICONS, PHASE_BADGE_CLASSES } from "@/content/phase-ui";
+import { missedDayMessage } from "@/content/motivational-messages";
 import { BlobDecoration } from "@/components/BlobDecoration";
 
 export const Route = createFileRoute("/_authenticated/hoje")({
@@ -85,12 +86,7 @@ function Hoje() {
       {diasPulados > 0 && (
         <div className="mt-5 flex items-start gap-3 rounded-2xl border border-gold/30 bg-gold/10 p-4">
           <Heart className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
-          <p className="text-sm leading-relaxed text-foreground">
-            {diasPulados === 1
-              ? "Você ficou um dia sem abrir o app — sem culpa nenhuma."
-              : `Você ficou ${diasPulados} dias sem abrir o app — sem culpa nenhuma.`}{" "}
-            Sua jornada não reiniciou: é só seguir de onde você está, a partir de hoje.
-          </p>
+          <p className="text-sm leading-relaxed text-foreground">{missedDayMessage(diasPulados)}</p>
         </div>
       )}
 
