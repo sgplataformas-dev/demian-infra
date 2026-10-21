@@ -220,6 +220,7 @@ export type Database = {
           id: string
           intestino: string
           lactose: string
+          last_seen_dia_geral: number | null
           remedios_afetam_sono: boolean
           sono: string
           started_at: string
@@ -233,6 +234,7 @@ export type Database = {
           id?: string
           intestino: string
           lactose: string
+          last_seen_dia_geral?: number | null
           remedios_afetam_sono?: boolean
           sono: string
           started_at?: string
@@ -246,6 +248,7 @@ export type Database = {
           id?: string
           intestino?: string
           lactose?: string
+          last_seen_dia_geral?: number | null
           remedios_afetam_sono?: boolean
           sono?: string
           started_at?: string

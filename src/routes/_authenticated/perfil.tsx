@@ -263,7 +263,7 @@ function Perfil() {
                 <XAxis dataKey="idx" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} domain={["auto", "auto"]} />
                 <Tooltip />
-                <Line type="monotone" dataKey="peso" stroke="#183451" strokeWidth={3} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="peso" stroke="#164E63" strokeWidth={3} dot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>

@@ -26,6 +26,7 @@ type ProfileRow = {
   remedios_afetam_sono: boolean;
   has_bonus: boolean;
   started_at: string;
+  last_seen_dia_geral: number | null;
 };
 
 function rowToProfile(row: ProfileRow): ProgramProfile {
@@ -51,6 +52,8 @@ export type ProgramStatus =
       diasDesdeInicio: number;
       proximoMarco: ReturnType<typeof nextMilestone>;
       marcosAlcancados: ReturnType<typeof reachedMilestones>;
+      /** Quantos dias ela pulou desde a ultima vez que abriu o app (0 = nenhum, sem culpa, so retomar hoje). */
+      diasPulados: number;
     };
 
 /** Status completo do programa pra usuaria logada: perfil, dia/fase atual, conteudo de hoje e marcos. */
@@ -61,7 +64,9 @@ export const getProgramStatus = createServerFn({ method: "GET" })
 
     const { data: row, error } = await supabase
       .from("demian_profiles")
-      .select("intestino, turno, sono, lactose, remedios_afetam_sono, has_bonus, started_at")
+      .select(
+        "intestino, turno, sono, lactose, remedios_afetam_sono, has_bonus, started_at, last_seen_dia_geral",
+      )
       .eq("user_id", userId)
       .maybeSingle();
 
@@ -82,6 +87,24 @@ export const getProgramStatus = createServerFn({ method: "GET" })
       Math.floor((Date.now() - startedAt.getTime()) / 86_400_000),
     );
 
+    // Dia do programa ja e por calendario (nunca "zera" sozinho) — so falta
+    // avisar com acolhimento quando ela pulou dias desde a ultima visita, em
+    // vez de ficar em silencio. `lastSeen` nulo (primeira visita) nunca conta
+    // como dia pulado.
+    const lastSeen = (row as ProfileRow).last_seen_dia_geral;
+    const diasPulados =
+      diaGeral !== null && lastSeen !== null ? Math.max(0, diaGeral - lastSeen - 1) : 0;
+
+    if (diaGeral !== null && diaGeral !== lastSeen) {
+      const { error: updateErr } = await supabase
+        .from("demian_profiles")
+        .update({ last_seen_dia_geral: diaGeral })
+        .eq("user_id", userId);
+      if (updateErr) {
+        console.error("[program-profile] falha ao atualizar last_seen_dia_geral", updateErr);
+      }
+    }
+
     return {
       temPerfil: true,
       profile,
@@ -93,6 +116,7 @@ export const getProgramStatus = createServerFn({ method: "GET" })
       diasDesdeInicio,
       proximoMarco: nextMilestone(diasDesdeInicio),
       marcosAlcancados: reachedMilestones(diasDesdeInicio),
+      diasPulados,
     };
   });
 
