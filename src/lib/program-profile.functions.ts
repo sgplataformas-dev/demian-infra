@@ -10,20 +10,51 @@ import {
 } from "@/content/program-engine";
 import { resolveDayContent, type DayContent } from "@/content/program-days";
 
+// Anamnese real aprovada pelo Dr. Demian (Dr_Demian_respondido.pdf) — bem
+// mais rica que o perfil de ramificacao original. `condicoes` incluir
+// "lactose" e quem deriva `lactose: "intolerante"` na gravacao; nao e
+// perguntado separado.
 const profileInputSchema = z.object({
-  intestino: z.enum(["preso", "solto"]),
-  turno: z.enum(["dia", "madrugada"]),
-  sono: z.enum(["bom", "ruim", "acorda_de_madrugada"]),
-  lactose: z.enum(["tolera", "intolerante"]),
-  remediosAfetamSono: z.boolean(),
+  idade: z.number().int().min(10).max(120),
+  menopausa: z.enum(["sim", "nao", "nao_sei"]),
+  tempoDor: z.enum(["menos_2", "2_a_5", "5_a_10", "mais_10"]),
+  ondeDoi: z.array(z.string()).min(1),
+  dorHoje: z.number().int().min(0).max(10),
+  intestino: z.enum(["preso", "solto", "alterna", "estufado"]),
+  vezesBanheiro: z.enum(["todo_dia", "3_a_5", "menos_3"]),
+  sono: z.enum(["bom", "regular", "ruim", "insonia"]),
+  acordaDeMadrugada: z.boolean(),
+  remedios: z.array(z.string()),
+  remediosOutro: z.string().max(200).nullable().optional(),
+  condicoes: z.array(z.string()),
+  turno: z.enum(["dia", "madrugada", "nao_trabalha_fora"]),
+  horaAcorda: z.string().regex(/^\d{2}:\d{2}$/, "Horário inválido"),
+  horaDorme: z.string().regex(/^\d{2}:\d{2}$/, "Horário inválido"),
+  naoCome: z.array(z.string()),
+  mercadoDisponivel: z.array(z.string()),
+  eventoAntesDor: z.array(z.string()),
 });
 
 type ProfileRow = {
+  idade: number | null;
+  menopausa: ProgramProfile["menopausa"] | null;
+  tempo_dor: ProgramProfile["tempoDor"] | null;
+  onde_doi: string[];
+  dor_hoje: number | null;
   intestino: ProgramProfile["intestino"];
-  turno: ProgramProfile["turno"];
+  vezes_banheiro: ProgramProfile["vezesBanheiro"] | null;
   sono: ProgramProfile["sono"];
+  acorda_de_madrugada: boolean;
+  remedios: string[];
+  remedios_outro: string | null;
+  condicoes: string[];
   lactose: ProgramProfile["lactose"];
-  remedios_afetam_sono: boolean;
+  turno: ProgramProfile["turno"];
+  hora_acorda: string | null;
+  hora_dorme: string | null;
+  nao_come: string[];
+  mercado_disponivel: string[];
+  evento_antes_dor: string[];
   has_bonus: boolean;
   started_at: string;
   last_seen_dia_geral: number | null;
@@ -31,13 +62,30 @@ type ProfileRow = {
 
 function rowToProfile(row: ProfileRow): ProgramProfile {
   return {
+    idade: row.idade ?? 0,
+    menopausa: row.menopausa ?? "nao_sei",
+    tempoDor: row.tempo_dor ?? "menos_2",
+    ondeDoi: row.onde_doi,
+    dorHoje: row.dor_hoje ?? 0,
     intestino: row.intestino,
-    turno: row.turno,
+    vezesBanheiro: row.vezes_banheiro ?? "todo_dia",
     sono: row.sono,
+    acordaDeMadrugada: row.acorda_de_madrugada,
+    remedios: row.remedios,
+    remediosOutro: row.remedios_outro,
+    condicoes: row.condicoes,
     lactose: row.lactose,
-    remediosAfetamSono: row.remedios_afetam_sono,
+    turno: row.turno,
+    horaAcorda: row.hora_acorda ?? "07:00",
+    horaDorme: row.hora_dorme ?? "22:00",
+    naoCome: row.nao_come,
+    mercadoDisponivel: row.mercado_disponivel,
+    eventoAntesDor: row.evento_antes_dor,
   };
 }
+
+const PROFILE_COLUMNS =
+  "idade, menopausa, tempo_dor, onde_doi, dor_hoje, intestino, vezes_banheiro, sono, acorda_de_madrugada, remedios, remedios_outro, condicoes, lactose, turno, hora_acorda, hora_dorme, nao_come, mercado_disponivel, evento_antes_dor, has_bonus, started_at, last_seen_dia_geral" as const;
 
 export type ProgramStatus =
   | { temPerfil: false }
@@ -64,9 +112,7 @@ export const getProgramStatus = createServerFn({ method: "GET" })
 
     const { data: row, error } = await supabase
       .from("demian_profiles")
-      .select(
-        "intestino, turno, sono, lactose, remedios_afetam_sono, has_bonus, started_at, last_seen_dia_geral",
-      )
+      .select(PROFILE_COLUMNS)
       .eq("user_id", userId)
       .maybeSingle();
 
@@ -121,10 +167,10 @@ export const getProgramStatus = createServerFn({ method: "GET" })
   });
 
 /**
- * Salva as respostas de ramificacao da usuaria. Na primeira vez, cria o
- * perfil e marca `started_at = now()` (comeca a contar o dia 1). Em
- * chamadas seguintes (ex.: usuaria corrige uma resposta), atualiza so as
- * respostas — nunca reinicia a contagem de dias.
+ * Salva as respostas da anamnese. Na primeira vez, cria o perfil e marca
+ * `started_at = now()` (comeca a contar o dia 1). Em chamadas seguintes
+ * (ex.: usuaria refaz a avaliacao), atualiza so as respostas — nunca
+ * reinicia a contagem de dias.
  */
 export const saveProgramProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -144,11 +190,26 @@ export const saveProgramProfile = createServerFn({ method: "POST" })
     }
 
     const payload = {
+      idade: data.idade,
+      menopausa: data.menopausa,
+      tempo_dor: data.tempoDor,
+      onde_doi: data.ondeDoi,
+      dor_hoje: data.dorHoje,
       intestino: data.intestino,
-      turno: data.turno,
+      vezes_banheiro: data.vezesBanheiro,
       sono: data.sono,
-      lactose: data.lactose,
-      remedios_afetam_sono: data.remediosAfetamSono,
+      acorda_de_madrugada: data.acordaDeMadrugada,
+      remedios: data.remedios,
+      remedios_outro: data.remediosOutro ?? null,
+      condicoes: data.condicoes,
+      // Nao e perguntado separado — deriva de "condicoes" incluir "lactose".
+      lactose: data.condicoes.includes("lactose") ? "intolerante" : "tolera",
+      turno: data.turno,
+      hora_acorda: data.horaAcorda,
+      hora_dorme: data.horaDorme,
+      nao_come: data.naoCome,
+      mercado_disponivel: data.mercadoDisponivel,
+      evento_antes_dor: data.eventoAntesDor,
       updated_at: new Date().toISOString(),
     };
 

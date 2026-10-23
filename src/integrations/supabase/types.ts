@@ -215,46 +215,88 @@ export type Database = {
       }
       demian_profiles: {
         Row: {
+          acorda_de_madrugada: boolean
+          condicoes: string[]
           created_at: string
+          dor_hoje: number | null
+          evento_antes_dor: string[]
           has_bonus: boolean
+          hora_acorda: string | null
+          hora_dorme: string | null
           id: string
+          idade: number | null
           intestino: string
           lactose: string
           last_seen_dia_geral: number | null
-          remedios_afetam_sono: boolean
+          menopausa: string | null
+          mercado_disponivel: string[]
+          nao_come: string[]
+          onde_doi: string[]
+          remedios: string[]
+          remedios_outro: string | null
           sono: string
           started_at: string
+          tempo_dor: string | null
           turno: string
           updated_at: string
           user_id: string
+          vezes_banheiro: string | null
         }
         Insert: {
+          acorda_de_madrugada?: boolean
+          condicoes?: string[]
           created_at?: string
+          dor_hoje?: number | null
+          evento_antes_dor?: string[]
           has_bonus?: boolean
+          hora_acorda?: string | null
+          hora_dorme?: string | null
           id?: string
+          idade?: number | null
           intestino: string
           lactose: string
           last_seen_dia_geral?: number | null
-          remedios_afetam_sono?: boolean
+          menopausa?: string | null
+          mercado_disponivel?: string[]
+          nao_come?: string[]
+          onde_doi?: string[]
+          remedios?: string[]
+          remedios_outro?: string | null
           sono: string
           started_at?: string
+          tempo_dor?: string | null
           turno: string
           updated_at?: string
           user_id: string
+          vezes_banheiro?: string | null
         }
         Update: {
+          acorda_de_madrugada?: boolean
+          condicoes?: string[]
           created_at?: string
+          dor_hoje?: number | null
+          evento_antes_dor?: string[]
           has_bonus?: boolean
+          hora_acorda?: string | null
+          hora_dorme?: string | null
           id?: string
+          idade?: number | null
           intestino?: string
           lactose?: string
           last_seen_dia_geral?: number | null
-          remedios_afetam_sono?: boolean
+          menopausa?: string | null
+          mercado_disponivel?: string[]
+          nao_come?: string[]
+          onde_doi?: string[]
+          remedios?: string[]
+          remedios_outro?: string | null
           sono?: string
           started_at?: string
+          tempo_dor?: string | null
           turno?: string
           updated_at?: string
           user_id?: string
+          vezes_banheiro?: string | null
         }
         Relationships: []
       }

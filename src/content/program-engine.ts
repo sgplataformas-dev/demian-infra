@@ -6,30 +6,79 @@
 // decidir o conteudo em si).
 //
 // Este arquivo e generico (tipos + resolver); o conteudo real de cada dia
-// fica em program-days.ts, hoje com placeholders ate o Demian entregar o
-// material.
+// fica em program-days.ts.
 
-export type IntestinoTipo = "preso" | "solto";
-export type Turno = "dia" | "madrugada";
-export type QualidadeSono = "bom" | "ruim" | "acorda_de_madrugada";
+export type IntestinoTipo = "preso" | "solto" | "alterna" | "estufado";
+export type Turno = "dia" | "madrugada" | "nao_trabalha_fora";
+export type QualidadeSono = "bom" | "regular" | "ruim" | "insonia";
 export type Lactose = "tolera" | "intolerante";
+export type Menopausa = "sim" | "nao" | "nao_sei";
+export type TempoDor = "menos_2" | "2_a_5" | "5_a_10" | "mais_10";
+export type VezesBanheiro = "todo_dia" | "3_a_5" | "menos_3";
 
+/**
+ * Perfil completo coletado na avaliacao (anamnese aprovada pelo Dr. Demian —
+ * ver Dr_Demian_respondido.pdf). Nem todo campo aqui entra no rule-engine
+ * (RuleCondition abaixo) — varios so alimentam o texto gerado na tela de
+ * diagnostico (avisos por remedio, trocas por condicao, horarios calculados),
+ * nao a escolha de qual variacao de conteudo mostrar.
+ */
 export type ProgramProfile = {
+  idade: number;
+  menopausa: Menopausa;
+  tempoDor: TempoDor;
+  ondeDoi: string[];
+  dorHoje: number;
   intestino: IntestinoTipo;
-  turno: Turno;
+  vezesBanheiro: VezesBanheiro;
   sono: QualidadeSono;
+  acordaDeMadrugada: boolean;
+  remedios: string[];
+  remediosOutro: string | null;
+  condicoes: string[];
   lactose: Lactose;
-  remediosAfetamSono: boolean;
+  turno: Turno;
+  horaAcorda: string;
+  horaDorme: string;
+  naoCome: string[];
+  mercadoDisponivel: string[];
+  eventoAntesDor: string[];
 };
+
+/** Flags calculadas a partir do ProgramProfile — usadas só pelo rule-engine. */
+export type DerivedFlags = {
+  temMenopausa: boolean;
+  temRemedioParaDormir: boolean;
+  isDiabetica: boolean;
+};
+
+export function deriveFlags(profile: ProgramProfile): DerivedFlags {
+  return {
+    // O proprio Dr. Demian trata "sim" e "nao sei" igual ("queda de
+    // estrogenio e progesterona fragmenta o sono...").
+    temMenopausa: profile.menopausa !== "nao",
+    temRemedioParaDormir:
+      profile.remedios.includes("relaxante") || profile.remedios.includes("remedio_dormir"),
+    isDiabetica: profile.condicoes.includes("diabetes"),
+  };
+}
 
 // Toda chave aqui e opcional: uma regra so testa as condicoes que declarar,
 // e uma regra com `when: {}` funciona como padrao (bate com qualquer perfil).
+// So os campos ESCALARES que de fato selecionam uma variacao de conteudo
+// entram aqui — campos array/texto livre (ondeDoi, remedios completo,
+// condicoes completo, naoCome, mercadoDisponivel, eventoAntesDor, idade,
+// tempoDor, dorHoje) nao fazem parte do rule-engine, so da tela de
+// diagnostico.
 export type RuleCondition = Partial<{
   intestino: IntestinoTipo;
   turno: Turno;
   sono: QualidadeSono;
+  acordaDeMadrugada: boolean;
   lactose: Lactose;
-  remediosAfetamSono: boolean;
+  temMenopausa: boolean;
+  temRemedioParaDormir: boolean;
+  isDiabetica: boolean;
 }>;
 
 export type ContentRule<T> = {
@@ -37,13 +86,28 @@ export type ContentRule<T> = {
   content: T;
 };
 
-const CONDITION_KEYS = ["intestino", "turno", "sono", "lactose", "remediosAfetamSono"] as const;
+const CONDITION_KEYS = [
+  "intestino",
+  "turno",
+  "sono",
+  "acordaDeMadrugada",
+  "lactose",
+  "temMenopausa",
+  "temRemedioParaDormir",
+  "isDiabetica",
+] as const;
 
-function matchesProfile(when: RuleCondition, profile: ProgramProfile): boolean {
+type MatchSubject = Pick<
+  ProgramProfile,
+  "intestino" | "turno" | "sono" | "acordaDeMadrugada" | "lactose"
+> &
+  DerivedFlags;
+
+function matchesProfile(when: RuleCondition, subject: MatchSubject): boolean {
   return CONDITION_KEYS.every((key) => {
     const expected = when[key];
     if (expected === undefined) return true;
-    return profile[key] === expected;
+    return subject[key] === expected;
   });
 }
 
@@ -62,7 +126,16 @@ function specificity(when: RuleCondition): number {
  * conteudo.
  */
 export function resolveContent<T>(rules: ContentRule<T>[], profile: ProgramProfile): T {
-  const candidates = rules.filter((rule) => matchesProfile(rule.when, profile));
+  const subject: MatchSubject = {
+    intestino: profile.intestino,
+    turno: profile.turno,
+    sono: profile.sono,
+    acordaDeMadrugada: profile.acordaDeMadrugada,
+    lactose: profile.lactose,
+    ...deriveFlags(profile),
+  };
+
+  const candidates = rules.filter((rule) => matchesProfile(rule.when, subject));
   if (candidates.length === 0) {
     throw new Error(
       "Nenhuma regra correspondeu ao perfil e nenhuma regra padrao (when: {}) foi definida.",
