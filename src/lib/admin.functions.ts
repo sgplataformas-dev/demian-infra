@@ -7,6 +7,7 @@ import { z } from "zod";
 // cliente Demian.
 const ADMIN_EMAILS = new Set([
   "axagentes@gmail.com",
+  "demianborgesdiaz348@gmail.com",
 ]);
 
 async function logDenied(
