@@ -7,6 +7,7 @@ import { PHASES, type PhaseId } from "@/content/program-engine";
 import { PHASE_ICONS, PHASE_BADGE_CLASSES } from "@/content/phase-ui";
 import { missedDayMessage } from "@/content/motivational-messages";
 import { BlobDecoration } from "@/components/BlobDecoration";
+import { MessageResponse } from "@/components/ai-elements/message";
 
 export const Route = createFileRoute("/_authenticated/hoje")({
   component: Hoje,
@@ -101,12 +102,16 @@ function Hoje() {
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{conteudoHoje.resumo}</p>
             <div className="mt-4 rounded-2xl bg-muted/60 p-4 text-sm">
               <p className="font-semibold text-foreground">O que fazer:</p>
-              <p className="mt-1 text-muted-foreground">{conteudoHoje.conteudoPrincipal}</p>
+              <MessageResponse className="mt-1 text-muted-foreground [&_strong]:text-foreground">
+                {conteudoHoje.conteudoPrincipal}
+              </MessageResponse>
             </div>
             {conteudoHoje.trocaOuDica ? (
               <div className="mt-3 rounded-2xl bg-muted/60 p-4 text-sm">
                 <p className="font-semibold text-foreground">Troca do dia:</p>
-                <p className="mt-1 text-muted-foreground">{conteudoHoje.trocaOuDica}</p>
+                <MessageResponse className="mt-1 text-muted-foreground [&_strong]:text-foreground">
+                  {conteudoHoje.trocaOuDica}
+                </MessageResponse>
               </div>
             ) : null}
           </div>
