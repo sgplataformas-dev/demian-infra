@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { hasActiveAccess } from "@/lib/purchase-access";
+import { ADMIN_EMAILS } from "@/lib/admin-emails";
 
 const inputSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(255),
@@ -41,20 +42,26 @@ export const signInWithEmailOnly = createServerFn({ method: "POST" })
     const { email } = data;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+    // Admin da whitelist (mesma usada pelo painel /admin) entra sem precisar
+    // de compra — nao faz sentido exigir "venda" de quem opera o produto.
+    const isAdminEmail = ADMIN_EMAILS.has(email);
+
     // 1) Verifica compra aprovada na base principal
-    const { data: purchases, error: purchasesErr } = await supabaseAdmin
-      .from("purchases")
-      .select("payment_status, payt_order_id, product_name, updated_at, purchase_date, created_at")
-      .eq("email", email);
+    const { data: purchases, error: purchasesErr } = isAdminEmail
+      ? { data: [], error: null }
+      : await supabaseAdmin
+          .from("purchases")
+          .select("payment_status, payt_order_id, product_name, updated_at, purchase_date, created_at")
+          .eq("email", email);
 
     if (purchasesErr) {
       console.error("[email-only-login] purchases query error", purchasesErr);
       return { ok: false as const, reason: "server_error" as const };
     }
 
-    let hasActive = hasActiveAccess(purchases as any);
+    let hasActive = isAdminEmail || hasActiveAccess(purchases as any);
 
-    const refunded = (purchases ?? []).length > 0 && !hasActive;
+    const refunded = !isAdminEmail && (purchases ?? []).length > 0 && !hasActive;
 
     // 1b) Fallback — consulta bases externas (vendas_payt / vendas_aprovacao)
     // Estorno/chargeback tem precedência: não consultamos bases externas,

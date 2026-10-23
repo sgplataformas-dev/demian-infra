@@ -1,14 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-
-// PLACEHOLDER: a lista herdada do clone continha e-mails da equipe do
-// cliente anterior — removidos. Adicione aqui os e-mails dos admins do
-// cliente Demian.
-const ADMIN_EMAILS = new Set([
-  "axagentes@gmail.com",
-  "demianborgesdiaz348@gmail.com",
-]);
+import { ADMIN_EMAILS } from "@/lib/admin-emails";
 
 async function logDenied(
   userId: string | null,
