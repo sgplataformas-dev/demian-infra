@@ -97,31 +97,6 @@ type Respostas = {
   eventoAntesDor?: string[];
 };
 
-const DRAFT_KEY = "demian:programa-intake:draft";
-
-function loadDraft(): { respostas: Respostas; step: number } | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(DRAFT_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as { respostas?: Respostas; step?: number; savedAt?: number };
-    if (!parsed.savedAt || Date.now() - parsed.savedAt > 7 * 24 * 60 * 60 * 1000) {
-      localStorage.removeItem(DRAFT_KEY);
-      return null;
-    }
-    if (!parsed.respostas) return null;
-    return { respostas: parsed.respostas, step: Math.max(0, parsed.step ?? 0) };
-  } catch {
-    localStorage.removeItem(DRAFT_KEY);
-    return null;
-  }
-}
-
-function saveDraft(respostas: Respostas, step: number) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(DRAFT_KEY, JSON.stringify({ respostas, step, savedAt: Date.now() }));
-}
-
 function validarValor(v: unknown): boolean {
   if (v === undefined || v === null || v === "") return false;
   if (typeof v === "number") return !isNaN(v);
@@ -284,14 +259,9 @@ function EscalaDor({ value, onChange }: { value?: number; onChange: (n: number) 
 function ProgramaIntakePage() {
   const navigate = useNavigate();
   const salvar = useServerFn(saveProgramProfile);
-  const draftInicial = loadDraft();
-  const [d, setD] = useState<Respostas>(draftInicial?.respostas ?? {});
-  const [step, setStep] = useState(draftInicial?.step ?? 0);
+  const [d, setD] = useState<Respostas>({});
+  const [step, setStep] = useState(0);
   const [enviando, setEnviando] = useState(false);
-
-  useEffect(() => {
-    saveDraft(d, step);
-  }, [d, step]);
 
   const perguntas: PerguntaConfig[] = [
     {
@@ -500,7 +470,6 @@ function ProgramaIntakePage() {
         toast.error("Não foi possível salvar suas respostas. Tente novamente.");
         return;
       }
-      localStorage.removeItem(DRAFT_KEY);
       navigate({ to: "/diagnostico" });
     } finally {
       setEnviando(false);
