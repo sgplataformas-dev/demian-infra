@@ -117,12 +117,14 @@ function NumInput({
   suffix,
   min,
   max,
+  name,
 }: {
   value?: number;
   onChange: (n: number) => void;
   suffix?: string;
   min?: number;
   max?: number;
+  name: string;
 }) {
   const [text, setText] = useState<string>(
     value !== undefined && !Number.isNaN(value) ? String(value) : "",
@@ -141,7 +143,10 @@ function NumInput({
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
+        name={name}
         autoComplete="off"
+        data-1p-ignore
+        data-lpignore="true"
         value={text}
         onChange={(e) => {
           const raw = e.target.value.replace(/\D/g, "");
@@ -267,7 +272,16 @@ function ProgramaIntakePage() {
     {
       key: "idade",
       label: "Qual a sua idade?",
-      input: <NumInput value={d.idade} onChange={(v) => setD({ ...d, idade: v })} suffix="anos" min={10} max={120} />,
+      input: (
+        <NumInput
+          value={d.idade}
+          onChange={(v) => setD({ ...d, idade: v })}
+          suffix="anos"
+          min={10}
+          max={120}
+          name="demian-intake-idade"
+        />
+      ),
     },
     {
       key: "menopausa",
@@ -361,10 +375,12 @@ function ProgramaIntakePage() {
             label: "Qual(is) outro(s) remédio(s)?",
             input: (
               <Textarea
+                name="demian-intake-remedios-outro"
                 placeholder="Descreva o(s) remédio(s)"
                 value={d.remediosOutro ?? ""}
                 onChange={(e) => setD({ ...d, remediosOutro: e.target.value })}
                 className="min-h-20"
+                autoComplete="off"
                 autoFocus
               />
             ),
@@ -394,6 +410,8 @@ function ProgramaIntakePage() {
       input: (
         <Input
           type="time"
+          name="demian-intake-hora-acorda"
+          autoComplete="off"
           value={d.horaAcorda ?? ""}
           onChange={(e) => setD({ ...d, horaAcorda: e.target.value })}
           className="h-14 text-xl font-semibold"
@@ -407,6 +425,8 @@ function ProgramaIntakePage() {
       input: (
         <Input
           type="time"
+          name="demian-intake-hora-dorme"
+          autoComplete="off"
           value={d.horaDorme ?? ""}
           onChange={(e) => setD({ ...d, horaDorme: e.target.value })}
           className="h-14 text-xl font-semibold"
