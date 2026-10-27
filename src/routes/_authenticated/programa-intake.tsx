@@ -151,13 +151,17 @@ function NumInput({
         onChange={(e) => {
           const raw = e.target.value.replace(/\D/g, "");
           setText(raw);
-          if (raw === "") {
-            onChange(NaN);
-            return;
-          }
-          let n = parseInt(raw, 10);
+          // Sem min/max aqui -- clampar a cada tecla sobrescrevia o que a
+          // pessoa estava digitando (ex.: o primeiro "1" de "18" virava 10
+          // na hora, antes do "8" ser digitado). Clamp só no blur.
+          onChange(raw === "" ? NaN : parseInt(raw, 10));
+        }}
+        onBlur={() => {
+          if (text === "") return;
+          let n = parseInt(text, 10);
           if (min !== undefined) n = Math.max(min, n);
           if (max !== undefined) n = Math.min(max, n);
+          if (String(n) !== text) setText(String(n));
           onChange(n);
         }}
         className="h-14 text-2xl font-semibold"
